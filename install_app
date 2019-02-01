@@ -1,0 +1,121 @@
+#!/bin/bash
+
+HOMEBREW_NO_AUTO_UPDATE=1
+# 安装iterm2
+read -p "即将安装:iterm2 [y/n](默认为y)" IS_INSTALL
+if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]
+then
+  echo "开始安装 iterm2软件"
+  brew cask install iterm2
+fi
+
+echo "-----------------------------------------------"
+# 安装sublmine3
+read -p "即将安装:sublime3 [y/n](默认为y)" IS_INSTALL
+if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]
+then
+  echo "开始安装 sublime3软件"
+  brew cask install sublime-text
+fi
+
+echo "-----------------------------------------------"
+#brew install tldr + alias help
+read -p "即将安装:tldr [y/n](默认为y)" IS_INSTALL
+if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]
+then
+  	echo "开始安装 tldr"
+  	brew install tldr
+	if ! grep "alias help=\"tldr\"" ~/.zshrc; 
+	then
+		# 给配置里加一个别名,以后只需要执行 help xxx就能看到这个命令是怎么用的了.
+		echo "alias help=\"tldr\"" >> ~/.zshrc
+	fi
+fi
+
+echo "-----------------------------------------------"
+#快速查看系列 quick look 在文件夹里,按空格: 
+read -p "即将安装: 访达 的预览.(在访达中,选中文件,按空格能预览文件内容.下面这些将会增加很多预览文件类型.) [y/n](默认为y)" IS_INSTALL
+if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]
+then
+  echo "开始安装 Folder 各种预览软件"
+	brew cask install qlcolorcode qlmarkdown qlprettypatch qlstephen qlmobi qlvideo quicklook-json quicklook-csv  webpquicklook 
+fi
+
+echo "-----------------------------------------------"
+# brew install wget
+read -p "即将安装:wget [y/n](默认为y)" IS_INSTALL
+if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]
+then
+  echo "开始安装 wget命令行工具"
+  brew install wget
+fi
+
+echo "-----------------------------------------------"
+# brew install youtube-dl
+read -p "即将安装:youtube-dl命令行下载各种网站视频 [y/n](默认为y)" IS_INSTALL
+if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]
+then
+  echo "开始安装 youtube-dl命令行工具"
+  brew install youtube-dl
+fi
+
+echo "-----------------------------------------------"
+# brew install autojump
+read -p "即将安装:autojump命令行j跳转到之前常去的目录 [y/n](默认为y)" IS_INSTALL
+if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]
+then
+  echo "开始安装 autojump命令行工具"
+  brew install autojump
+  # 放到zsh自启动服务中，下次再开zsh窗口就有这个功能了！(装完之后，在当前窗口是没有的)
+  if ! grep "[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh" ~/.zshrc; 
+  then
+    echo "[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh" >> ~/.zshrc
+  fi
+fi
+
+echo "-----------------------------------------------"
+#brew install tree
+read -p "即将安装:tree命令行 [y/n](默认为y)" IS_INSTALL
+if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]
+then
+  echo "开始安装 tree命令行工具"
+  brew install tree
+fi
+
+echo "-----------------------------------------------"
+#brew install ccat
+read -p "即将安装:ccat命令行(cat的彩色版本) [y/n](默认为y)" IS_INSTALL
+if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]
+then
+  echo "开始安装 ccat命令行工具"
+  brew install ccat
+fi
+
+echo "-----------------------------------------------"
+# brew cask install launchrocket 
+read -p "即将安装:launchrocket(装好之后,可以在设置中直接管理自启动服务,如:nginx,mysql,redis等) [y/n](默认为y)" IS_INSTALL
+if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]
+then
+  echo "开始安装 launchrocket软件."
+  brew cask install launchrocket 
+fi
+
+echo "-----------------------------------------------"
+#brew cask install sequel-pro-nightly
+read -p "即将安装:sequel-pro-nightly(mysql图形管理工具) [y/n](默认为y)" IS_INSTALL
+if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]
+then
+  echo "开始安装 sequel-pro-nightly软件."
+  brew cask install sequel-pro-nightly 
+fi
+
+echo "-----------------------------------------------"
+#brew cask install sourcetree
+read -p "即将安装:sourcetree(git的图形管理工具) [y/n](默认为y)" IS_INSTALL
+if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]
+then
+  echo "开始安装 sourcetree软件."
+  brew cask install sourcetree 
+fi
+
+echo "所有软件安装完成，建议你重新打开一个终端窗口，以加载全部辅助功能！(iTerm2装好了!那就快去使用吧.)"

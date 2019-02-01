@@ -1,0 +1,116 @@
+#!/bin/bash
+
+
+brew_is_installed() {
+  brew list -1 | grep -Fqx "$1"
+}
+
+
+# 生成ssh key 如果没有就自动来一个!
+echo "验证下是否有ssh key,如果没有会帮你生成一个..."
+
+if  [[ ! -f ~/.ssh/id_rsa.pub ]] 
+then
+	echo "我觉得直接回车默认就好.. 不过千万别弄没了. 生成的文件在~/.ssh/目录"
+	ssh-keygen -t rsa
+	echo "顺便在备份一次,省得你弄没了. .bak文件是备份哈!"
+	cp ~/.ssh/id_rsa.pub ~/.ssh/id_rsa.pub.bak
+	cp ~/.ssh/id_rsa ~/.ssh/id_rsa.bak
+else
+	echo "你已经有了,在目录:~/.ssh/ ,自动跳过这个步骤!"
+fi
+
+# 装brew同时会自动安装xcode command line tools 详见其官网: https://brew.sh/index_zh-cn 
+
+echo "-----------------------------------------------"
+echo "安装brew同时会自动安装xcode command line tools:"
+if  [ ! command -v brew >/dev/null 2>&1 ] 
+then
+	echo "没安装,来自动装一个.homebrew!"
+	# 官网推荐的brew安装方式:
+	/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+	export SHELL="/bin/zsh"
+
+	# TODO: 如果安装失败,那么退出脚本!
+
+else
+	echo "你已经安装好brew,自动跳过这个步骤!"
+fi
+
+
+echo "-----------------------------------------------"
+echo "brew安装zsh 和 oh_my_zsh:"
+
+if [ $SHELL != "/bin/zsh" ] 
+then
+	echo "没安装,来自动装一个."
+
+	brew install zsh zsh-completions zsh-autosuggestions zsh-syntax-highlighting
+
+	if ! grep "source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ~/.zshrc; 
+	then
+		echo "source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh" >> ~/.zshrc
+	fi
+
+	if ! grep "source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ~/.zshrc; 
+	then
+		echo "source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
+	fi
+
+
+	# 切换到zsh为默认shell
+	chsh -s $(which zsh)
+	# 安装oh_my_zsh:  TODO: !!!++++++=== 这里遇到问题，执行完后会自动跳出脚本？？？？
+	sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+else
+	echo "你已经安装好brew,自动跳过这个步骤!"
+fi
+
+
+
+echo "-----------------------------------------------"
+
+echo "安裝git:"
+git --version
+if  [ `echo $?` -ne 0 ] 
+then
+	brew install git
+else
+	echo "git 安装完成!"
+fi
+
+echo "安装brew的一些常用库"
+brew tap homebrew/cask
+brew tap homebrew/cask-versions
+
+
+
+echo "-----------------------------------------------"
+echo "安裝port(另一种mac命令行软件管理工具,php等软件用这个装,问题少一些!):"
+port version
+if  [ `echo $?` -ne 0 ] 
+then
+	curl -O https://distfiles.macports.org/MacPorts/MacPorts-2.5.4.tar.gz && tar xzvf MacPorts-2.5.4.tar.gz  && cd MacPorts-2.5.4 && ./configure && make && echo "下面见到password请注意输入登录密码,将自动执行sodu:" && sudo make install && cd ../ && rm -rf MacPorts-2.5.4*
+	#  port自动安装至 /opt/local/bin 但没有装载环境变量...
+	export PATH=$PATH:/opt/local/bin
+	# TODO: 将上面那段,加入到 ~/.zshrc (最好能验证是否已经添加?? 没有才加入.)
+
+else
+	echo "你已经安装好port,自动跳过这个步骤!"
+fi
+# 如果没有,那么增加一个进入.zshrc和环境变量中去!
+if ! grep "/opt/local/bin" ~/.zshrc; 
+then
+	echo "export PATH=\"\$PATH:/opt/local/bin\"" >> ~/.zshrc
+fi
+echo "请手动执行: export PATH=$PATH:/opt/local/bin"
+
+echo "开发环境基础组件安装完成!!"
+
+
+
+
+
+
+

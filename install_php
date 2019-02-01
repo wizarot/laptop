@@ -1,0 +1,22 @@
+#!/bin/bash
+
+HOMEBREW_NO_AUTO_UPDATE=1
+
+echo "即将开始安装PHP开发环境和MySql,Redis,Nginx:"
+
+# 安装mysql
+read -p "即将安装:mysql [y/n](默认为y)" IS_INSTALL
+if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]
+then
+  echo "开始安装 mysql软件"
+  sudo port install mysql
+fi
+
+
+port search name
+
+安装新软件
+sudo port install name
+
+卸载软件
+sudo port uninstall name
