@@ -37,6 +37,9 @@ else
 	echo "你已经安装好brew,自动跳过这个步骤!"
 fi
 
+# 启用xcode的命令行开发工具
+sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer
+
 
 echo "-----------------------------------------------"
 echo "brew安装zsh 和 oh_my_zsh:"

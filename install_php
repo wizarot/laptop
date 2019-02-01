@@ -8,15 +8,99 @@ echo "即将开始安装PHP开发环境和MySql,Redis,Nginx:"
 read -p "即将安装:mysql [y/n](默认为y)" IS_INSTALL
 if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]
 then
-  echo "开始安装 mysql软件"
-  sudo port install mysql
+  echo "开始安装 MySql软件"
+  #sudo port install mysql #用port安装太慢,还不方便,我们改回使用brew install 
+  brew install mysql
+  # 启动服务
+  echo "brew 操作mysql的详细信息: brew info mysql"
+  echo "启动mysql服务: brew services start mysql"
+  echo "停止mysql服务: brew services start mysql"
+fi
+
+echo "---------------------------------------------"
+# 安装redis
+read -p "即将安装:redis [y/n](默认为y)" IS_INSTALL
+if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]
+then
+  echo "开始安装 redis软件"
+  #sudo port install redis #用port安装太慢,还不方便,我们改回使用brew install 
+  brew install redis
+  # 启动服务
+  echo "brew 操作redis的详细信息: brew info redis"
+  echo "启动redis服务: brew services start redis"
+  echo "停止redis服务: brew services start redis"
+fi
+
+echo "---------------------------------------------"
+# 安装nginx
+read -p "即将安装:nginx [y/n](默认为y)" IS_INSTALL
+if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]
+then
+  echo "开始安装 nginx软件"
+  #sudo port install nginx #用port安装太慢,还不方便,我们改回使用brew install 
+  brew install nginx
+
+  # 安装配置文件 80端口监听需要root权限
+  cp configs/nginx/nginx.conf /usr/local/etc/nginx/nginx.conf
+  # 启动服务
+  echo "brew 操作Nginx的详细信息: brew info nginx"
+  echo "启动Nginx服务: sudo brew services start nginx"
+  echo "停止Nginx服务: sudo brew services start nginx"
 fi
 
 
-port search name
+# 安装各种版本php....!(因为最近brew安装php总出现各种奇怪问题,旧版本php brew又不在维护.所以只能暂时使用这个port来安装管理.)
+echo "---------------------------------------------"
+# 安装php54
+read -p "即将安装:php5.4 [y/n](默认为y)" IS_INSTALL
+if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]
+then
+  echo "开始安装 php5.4"
+  sudo port install php54-fpm
+  echo "安装php模块: php54-redis php54-imagick php54-intl php54-opcache"
+  sudo port install php54-redis php54-imagick php54-intl php54-opcache
+  # 修改配置文件 /opt/local/etc/php54
+  sudo cp -r $PWD/configs/php/php54/ /opt/local/etc/php54/
+  # 服务启动..
+  echo "服务管理详细信息,详见: port help"
+  echo "启动php-fpm服务: sudo port load php54-fpm"
+  echo "停止php-fpm服务: sudo port unload php54-fpm"
+  # 版本切换???
+fi
 
-安装新软件
-sudo port install name
+echo "---------------------------------------------"
+# 安装redis
+read -p "即将安装:php7.0 [y/n](默认为y)" IS_INSTALL
+if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]
+then
+  echo "开始安装 php7.0"
+  sudo port install php70-fpm
+  echo "安装php模块: php70-redis php70-imagick php70-intl php70-opcache"
+  sudo port install php70-redis php70-imagick php70-intl php70-opcache
+  # 修改配置文件 /opt/local/etc/php70
+  sudo cp -r $PWD/configs/php/php70/ /opt/local/etc/php70/
+  # 服务启动..
+  echo "服务管理详细信息,详见: port help"
+  echo "启动php-fpm服务: sudo port load php70-fpm"
+  echo "停止php-fpm服务: sudo port unload php70-fpm"
+  # 版本切换???
+fi
 
-卸载软件
-sudo port uninstall name
+echo "---------------------------------------------"
+# 安装redis
+read -p "即将安装:php7.2 [y/n](默认为y)" IS_INSTALL
+if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]
+then
+  echo "开始安装 php7.2"
+  sudo port install php72-fpm
+  echo "安装php模块: php72-redis php72-imagick php72-intl php72-opcache"
+  sudo port install php72-redis php72-imagick php72-intl php72-opcache
+  # 修改配置文件 /opt/local/etc/php72
+  sudo cp -r $PWD/configs/php/php72/ /opt/local/etc/php72/
+  # 服务启动..
+  echo "服务管理详细信息,详见: port help"
+  echo "启动php-fpm服务: sudo port load php72-fpm"
+  echo "停止php-fpm服务: sudo port unload php72-fpm"
+  # 版本切换???
+fi
+
