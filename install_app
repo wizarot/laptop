@@ -74,6 +74,20 @@ then
 fi
 
 echo "-----------------------------------------------"
+# brew install zsh-autosuggestions
+read -p "即将安装:zsh-autosuggestions命令行j跳转到之前常去的目录 [y/n](默认为y)" IS_INSTALL
+if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]
+then
+  echo "开始安装 zsh-autosuggestions 命令行工具"
+  brew install zsh-autosuggestions
+  # 放到zsh自启动服务中，下次再开zsh窗口就有这个功能了！(装完之后，在当前窗口是没有的)
+  if ! grep "source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ~/.zshrc; 
+  then
+    echo "source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh" >> ~/.zshrc
+  fi
+fi
+
+echo "-----------------------------------------------"
 #brew install tree
 read -p "即将安装:tree命令行 [y/n](默认为y)" IS_INSTALL
 if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]

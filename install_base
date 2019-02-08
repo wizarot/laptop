@@ -107,6 +107,8 @@ if ! grep "/opt/local/bin" ~/.zshrc;
 then
 	echo "export PATH=\"\$PATH:/opt/local/bin\"" >> ~/.zshrc
 fi
+# 不重新升級一下,似乎沒法自動裝php?!
+sudo port selfupdate
 echo "请手动执行: export PATH=$PATH:/opt/local/bin"
 
 echo "开发环境基础组件安装完成!!"
