@@ -1,0 +1,90 @@
+#!/usr/bin/php
+<?php
+// 还是用我自己最熟悉的php吧! 确保 /usr/bin/php有php执行程序,如果没有,请自己更换一个当前的绝对路径. 使用: which php即可.如果php都没装,那也不用切换php版本了.
+
+// php-version 这个脚本放入~/bin目录下.
+
+// TODO: 如果没有 ~/bin/目录 那么建一个
+// $PATH中增加 ~/bin/目录  
+
+
+
+
+// 获取调用参数
+if(!empty($argv)){
+	$toVer = $argv[1];
+}
+
+// 1. 在 opt/local/bin文件夹下,查找php版本
+// $path = "/usr/local/Cellar/";
+$path = "/opt/local/bin/";
+$files = scandir($path);
+$phps = array();
+// 2. 执行以下,把可用版本号和对应路径放入数组
+foreach ($files as $name) {
+	if (preg_match('/php[0-9]{2}$/',$name)) {
+		$phps[] = "{$path}{$name}/bin/php";//绝对路径
+	}
+}
+
+$list = [];
+foreach ($phps as $phpBin) {
+	$ver = getVersionNumber($phpBin);
+	$list[$ver] = $phpBin;
+}
+// 一个都没有,可能是上面$path路径错了.那么直接给一个提示
+if(empty($list)){
+	echo "\033[31m {$path} 目录下没有找到php70这样的目录.请检查! \033[0m\n";
+	die;
+}
+
+// 3. 获取当前php的版本
+$currentPHP = exec("which php");
+$currentPHP = getVersionNumber($currentPHP);
+
+
+if(is_null($toVer)){
+	// 执行命令: php-version
+	// 显示当前php版本,和列表:
+	// 5.4
+	// * 7.0
+	// 7.2
+	// 4. 显示出来
+	foreach ($list as $ver => $path) {
+		if($ver == $currentPHP){
+			echo "\033[47;30m* {$ver} \033[0m \n";//白底黑字
+		}else{
+			echo "\033[32m  {$ver} \033[0m\n";// 绿字
+		}
+	}
+}else{
+	// 切换版本
+	// 执行命令: php-version 70
+	// 检查是否存在版本?
+	if(array_key_exists($toVer, $list)){
+		// 通过下面命令,完成切换版本:
+		// 执行 ln -sf ~/bin/php /opt/local/bin/php70
+		// 执行 ln -sf ~/bin/php /opt/local/bin/php54
+		// 执行 ln -sf ~/bin/php /opt/local/bin/php72 
+		exec("ln -sf {$list[$toVer]} ~/bin/php");
+	}else{
+		echo "\033[31m 找不到php版本{$toVer} \033[0m \n";
+		die;
+	}
+	
+}
+
+
+
+
+
+// 传php bin文件绝对路径,返回php版本号
+function getVersionNumber($phpBin='')
+{
+	// 多行返回放入数组
+	exec("{$phpBin} -v", $output);
+	// 正常只关心第一行.
+	preg_match("/\d+(\.\d+){1}/", $output[0], $match);
+	// var_dump($match);die;
+    return $match[0];
+}
