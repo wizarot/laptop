@@ -2,10 +2,16 @@
 
 HOMEBREW_NO_AUTO_UPDATE=1
 
+# 如果没有,那么增加一个进入.zshrc和环境变量中去!
+if ! grep "/opt/local/bin:$HOME/bin" ~/.zshrc; 
+then
+  echo "export PATH=\"\$PATH:/opt/local/bin:$HOME/bin\"" >> ~/.zshrc
+fi
+
 echo "即将开始安装PHP开发环境和MySql,Redis,Nginx:"
 
 # 安装mysql
-read -p "即将安装:mysql [y/n](默认为y)" IS_INSTALL
+read -p "即将安装:mysql [Y/n](默认为y)" IS_INSTALL
 if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]
 then
   echo "开始安装 MySql软件"
@@ -19,7 +25,7 @@ fi
 
 echo "---------------------------------------------"
 # 安装redis
-read -p "即将安装:redis [y/n](默认为y)" IS_INSTALL
+read -p "即将安装:redis [Y/n](默认为y)" IS_INSTALL
 if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]
 then
   echo "开始安装 redis软件"
@@ -33,7 +39,7 @@ fi
 
 echo "---------------------------------------------"
 # 安装nginx
-read -p "即将安装:nginx [y/n](默认为y)" IS_INSTALL
+read -p "即将安装:nginx [Y/n](默认为y)" IS_INSTALL
 if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]
 then
   echo "开始安装 nginx软件"
@@ -52,7 +58,7 @@ fi
 # 安装各种版本php....!(因为最近brew安装php总出现各种奇怪问题,旧版本php brew又不在维护.所以只能暂时使用这个port来安装管理.)
 echo "---------------------------------------------"
 # 安装php54
-read -p "即将安装:php5.4 [y/n](默认为y)" IS_INSTALL
+read -p "即将安装:php5.4 [Y/n](默认为y)" IS_INSTALL
 if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]
 then
   echo "开始安装 php5.4"
@@ -70,7 +76,7 @@ fi
 
 echo "---------------------------------------------"
 # 安装redis
-read -p "即将安装:php7.0 [y/n](默认为y)" IS_INSTALL
+read -p "即将安装:php7.0 [Y/n](默认为y)" IS_INSTALL
 if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]
 then
   echo "开始安装 php7.0"
@@ -88,7 +94,7 @@ fi
 
 echo "---------------------------------------------"
 # 安装redis
-read -p "即将安装:php7.2 [y/n](默认为y)" IS_INSTALL
+read -p "即将安装:php7.2 [Y/n](默认为y)" IS_INSTALL
 if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]
 then
   echo "开始安装 php7.2"
@@ -101,6 +107,20 @@ then
   echo "服务管理详细信息,详见: port help"
   echo "启动php-fpm服务: sudo port load php72-fpm"
   echo "停止php-fpm服务: sudo port unload php72-fpm"
-  # 版本切换???
+fi
+
+echo "---------------------------------------------"
+# 安装 php-version命令,切换php版本
+read -p "即将安装:php-version命令 [Y/n](默认为y)" IS_INSTALL
+if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]
+then
+  echo "开始安装 php-version"
+  if [ ! -d $HOME/bin ]
+  then 
+    mkdir $HOME/bin
+  fi
+  cp ./php-version $HOME/bin/
+  
+  echo "安装完成,执行 php-version 查看版本. php-version 5.4 切换版本."
 fi
 

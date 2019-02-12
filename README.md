@@ -77,6 +77,35 @@ cat命令的升级版,将会产生美化的代码,json等
 ![image.png](https://upload-images.jianshu.io/upload_images/316824-abcb728a213f1590.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
+## install_php描述:
+
+### 安装PHP开发环境和MySql,Redis,Nginx(可以自己选装或者不装)
+安装MySql,Redis,Nginx顺便复制了一份我自己的配置.因为是brew安装的.所以启动服务都是 brew services start mysql 这样,redis,nginx都这样管理的. 详情,见:brew info mysql
+
+### 安装PHP多个版本. 目前有php5.4 php7.0 php7.2 , 如此简单的脚本,你想装别的版本就自己改一下版本号咯.
+我安装的是php-fpm配合Nginx.开发环境配置文件也用的我本地的.可以自己改.也能直接用. php分别监听9054,9070,9072端口,分别对应5.4, 7.0, 7.2三个版本.
+
+### 安装一个我自己写的php-version来管理和切换本地php版本环境.
+作用是让当前命令行执行php -v时有不同版本. 我们的项目版本太多了,所以要适应不同项目版本.
+功能和原理非常简单,如果你是php程序员自己看下代码.大概就明白了.
+不明白可以问我,或者自己研究都行.
+
+使用方法:
+
+查看当前可用版本.
+
+ ```
+ php-version
+ ``` 
+
+后面接版本号,就能切换版本了.
+
+```
+php-version 5.4
+``` 
+
+
+
 #注意事项
 
 基本上随意安装,顶多报个错误.

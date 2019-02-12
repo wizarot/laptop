@@ -103,13 +103,13 @@ else
 	echo "你已经安装好port,自动跳过这个步骤!"
 fi
 # 如果没有,那么增加一个进入.zshrc和环境变量中去!
-if ! grep "/opt/local/bin" ~/.zshrc; 
+if ! grep "$HOME/bin:/opt/local/bin" ~/.zshrc; 
 then
-	echo "export PATH=\"\$PATH:/opt/local/bin\"" >> ~/.zshrc
+	echo "export PATH=\"$HOME/bin:/opt/local/bin:\$PATH\"" >> ~/.zshrc
 fi
 # 不重新升級一下,似乎沒法自動裝php?!
 sudo port selfupdate
-echo "请手动执行: export PATH=$PATH:/opt/local/bin"
+echo "请手动执行: export PATH=$HOME/bin:$PATH:/opt/local/bin"
 
 echo "开发环境基础组件安装完成!!"
 

@@ -16,8 +16,8 @@ if(!empty($argv)){
 }
 
 // 1. 在 opt/local/bin文件夹下,查找php版本
-// $path = "/usr/local/Cellar/";
-$path = "/opt/local/bin/";
+// $path = "/usr/local/Cellar/";// 这个是brew安装php版本路径,注意需要手动在php目录下软连接bin目录. (如果你不明白做什么就别用这个了.自己处理也不复杂.如果有更好的办法麻烦给我pr)
+$path = "/opt/local/bin/";// 这个是port 安装php版本路径. 我这个项目是用这个安装的,所以默认在这里.
 $files = scandir($path);
 $phps = array();
 // 2. 执行以下,把可用版本号和对应路径放入数组
