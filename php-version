@@ -23,7 +23,7 @@ $phps = array();
 // 2. 执行以下,把可用版本号和对应路径放入数组
 foreach ($files as $name) {
 	if (preg_match('/php[0-9]{2}$/',$name)) {
-		$phps[] = "{$path}{$name}/bin/php";//绝对路径
+		$phps[] = "{$path}{$name}";//绝对路径 /bin/php
 	}
 }
 

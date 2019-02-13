@@ -2,10 +2,10 @@
 
 HOMEBREW_NO_AUTO_UPDATE=1
 
-# 如果没有,那么增加一个进入.zshrc和环境变量中去!
-if ! grep "/opt/local/bin:$HOME/bin" ~/.zshrc; 
+# 如果没有,那么增加一个进入.zshrc和环境变量中去! - 顺序很重要!
+if ! grep "$HOME/bin:/opt/local/bin:\$PATH" ~/.zshrc; 
 then
-  echo "export PATH=\"\$PATH:/opt/local/bin:$HOME/bin\"" >> ~/.zshrc
+  echo "export PATH=\"$HOME/bin:/opt/local/bin:\$PATH\"" >> ~/.zshrc
 fi
 
 echo "即将开始安装PHP开发环境和MySql,Redis,Nginx:"
@@ -63,9 +63,10 @@ if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]
 then
   echo "开始安装 php5.4"
   sudo port install php54-fpm
-  echo "安装php模块: php54-redis php54-imagick php54-intl php54-opcache"
-  sudo port install php54-redis php54-imagick php54-intl php54-opcache
+  echo "安装php模块: php54-redis php54-imagick php54-intl php54-opcache php54-iconv php54-mysql"
+  sudo port install php54-redis php54-imagick php54-intl php54-opcache php54-iconv php54-mysql
   # 修改配置文件 /opt/local/etc/php54
+  sed -i '' "s/user\ \=\ _nobody/user\ \=\ $USER/g" configs/php/php54/php-fpm.conf
   sudo cp -r $PWD/configs/php/php54/ /opt/local/etc/php54/
   # 服务启动..
   echo "服务管理详细信息,详见: port help"
@@ -81,9 +82,10 @@ if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]
 then
   echo "开始安装 php7.0"
   sudo port install php70-fpm
-  echo "安装php模块: php70-redis php70-imagick php70-intl php70-opcache"
-  sudo port install php70-redis php70-imagick php70-intl php70-opcache
+  echo "安装php模块: php70-redis php70-imagick php70-intl php70-opcache php70-iconv php70-mysql"
+  sudo port install php70-redis php70-imagick php70-intl php70-opcache php70-iconv php70-mysql
   # 修改配置文件 /opt/local/etc/php70
+  sed -i '' "s/user\ \=\ _nobody/user\ \=\ $USER/g" configs/php/php70/php-fpm.d/www.conf
   sudo cp -r $PWD/configs/php/php70/ /opt/local/etc/php70/
   # 服务启动..
   echo "服务管理详细信息,详见: port help"
@@ -99,9 +101,10 @@ if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]
 then
   echo "开始安装 php7.2"
   sudo port install php72-fpm
-  echo "安装php模块: php72-redis php72-imagick php72-intl php72-opcache"
-  sudo port install php72-redis php72-imagick php72-intl php72-opcache
-  # 修改配置文件 /opt/local/etc/php72
+  echo "安装php模块: php72-redis php72-imagick php72-intl php72-opcache php72-iconv php72-mysql"
+  sudo port install php72-redis php72-imagick php72-intl php72-opcache php72-iconv php72-mysql
+  # 修改配置文件 /opt/local/etc/php72 , 处理下执行权限
+  sed -i '' "s/user\ \=\ _nobody/user\ \=\ $USER/g" configs/php/php72/php-fpm.d/www.conf
   sudo cp -r $PWD/configs/php/php72/ /opt/local/etc/php72/
   # 服务启动..
   echo "服务管理详细信息,详见: port help"
