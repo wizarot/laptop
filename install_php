@@ -127,3 +127,14 @@ then
   echo "安装完成,执行 php-version 查看版本. php-version 5.4 切换版本."
 fi
 
+echo "-----------------------------------------------"
+
+echo "安裝composer:"
+composer -v
+if  [ `echo $?` -ne 0 ] 
+then
+  php composer-setup.php --install-dir=bin --filename=composer
+else
+  echo "composer 安装完成!"
+fi
+
