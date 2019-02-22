@@ -63,8 +63,8 @@ if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]
 then
   echo "开始安装 php5.4"
   sudo port install php54-fpm
-  echo "安装php模块: php54-redis php54-imagick php54-intl php54-opcache php54-iconv php54-mysql php54-openssl php54-curl"
-  sudo port install php54-redis php54-imagick php54-intl php54-opcache php54-iconv php54-mysql php54-openssl php54-curl
+  echo "安装php模块: php54-redis php54-imagick php54-intl php54-opcache php54-iconv php54-mysql php54-openssl php54-curl php54-mbstring php54-exif php54-pcntl php54-sockets php54-ftp php54-zip php54-soap"
+  sudo port install php54-redis php54-imagick php54-intl php54-opcache php54-iconv php54-mysql php54-openssl php54-curl php54-mbstring php54-exif php54-pcntl php54-sockets php54-ftp php54-zip php54-soap
   # 修改配置文件 /opt/local/etc/php54
   sed -i '' "s/user\ \=\ _nobody/user\ \=\ $USER/g" configs/php/php54/php-fpm.conf
   sudo cp -r $PWD/configs/php/php54/ /opt/local/etc/php54/
@@ -82,8 +82,8 @@ if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]
 then
   echo "开始安装 php7.0"
   sudo port install php70-fpm
-  echo "安装php模块: php70-redis php70-imagick php70-intl php70-opcache php70-iconv php70-mysql php70-openssl php70-curl"
-  sudo port install php70-redis php70-imagick php70-intl php70-opcache php70-iconv php70-mysql php70-openssl php70-curl
+  echo "安装php模块: php70-redis php70-imagick php70-intl php70-opcache php70-iconv php70-mysql php70-openssl php70-curl php70-mbstring php70-exif php70-pcntl php70-sockets php70-ftp php70-zip php70-soap"
+  sudo port install php70-redis php70-imagick php70-intl php70-opcache php70-iconv php70-mysql php70-openssl php70-curl php70-mbstring php70-exif php70-pcntl php70-sockets php70-ftp php70-zip php70-soap
   # 修改配置文件 /opt/local/etc/php70
   sed -i '' "s/user\ \=\ _nobody/user\ \=\ $USER/g" configs/php/php70/php-fpm.d/www.conf
   sudo cp -r $PWD/configs/php/php70/ /opt/local/etc/php70/
@@ -101,8 +101,8 @@ if [ "$IS_INSTALL" == "y" ] || [ "$IS_INSTALL" == "" ]
 then
   echo "开始安装 php7.2"
   sudo port install php72-fpm
-  echo "安装php模块: php72-redis php72-imagick php72-intl php72-opcache php72-iconv php72-mysql php72-openssl php72-curl"
-  sudo port install php72-redis php72-imagick php72-intl php72-opcache php72-iconv php72-mysql php72-openssl php72-curl
+  echo "安装php模块: php72-redis php72-imagick php72-intl php72-opcache php72-iconv php72-mysql php72-openssl php72-curl php72-mbstring php72-exif php72-pcntl php72-sockets php72-ftp php72-zip php72-soap"
+  sudo port install php72-redis php72-imagick php72-intl php72-opcache php72-iconv php72-mysql php72-openssl php72-curl php72-mbstring php72-exif php72-pcntl php72-sockets php72-ftp php72-zip php72-soap
   # 修改配置文件 /opt/local/etc/php72 , 处理下执行权限
   sed -i '' "s/user\ \=\ _nobody/user\ \=\ $USER/g" configs/php/php72/php-fpm.d/www.conf
   sudo cp -r $PWD/configs/php/php72/ /opt/local/etc/php72/
